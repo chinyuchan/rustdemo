@@ -38,10 +38,13 @@ struct Record {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Balance {
+    pub order_id: u64,
+    pub state: u8,
     pub mnemonic: String,
     pub address: String,
     pub pub_key: String,
     pub balance: u64,
+    pub to_user: Option<String>,
 }
 
 fn get_owned_utxos(url: &str, pub_key: &str) -> Result<HashMap<TxoSID, (Utxo, Option<OwnerMemo>)>> {
@@ -88,32 +91,35 @@ fn main() {
     let mut csv_writer = WriterBuilder::new().has_headers(false).from_writer(writer);
     // 写入表头
     csv_writer
-        .write_record(&["mnemonic", "address", "pub_key", "balance"])
+        .write_record(&[
+            "order_id", "state", "mnemonic", "address", "pub_key", "balance", "to_user",
+        ])
         .unwrap();
 
     for line in csv_reader.deserialize() {
         let record: Record = line.unwrap();
 
         let balance = get_fra_balance(&args.rpc, &record.center_mnemonic);
-        if balance > 0 {
-            let key_pair =
-                wallet::restore_keypair_from_mnemonic_default(&record.center_mnemonic).unwrap();
-            let xfr_pk = key_pair.get_pk_ref();
-            let address = wallet::public_key_to_bech32(xfr_pk);
-            let pub_key = engine::general_purpose::URL_SAFE.encode(xfr_pk.zei_to_bytes());
+        let key_pair =
+            wallet::restore_keypair_from_mnemonic_default(&record.center_mnemonic).unwrap();
+        let xfr_pk = key_pair.get_pk_ref();
+        let address = wallet::public_key_to_bech32(xfr_pk);
+        let pub_key = engine::general_purpose::URL_SAFE.encode(xfr_pk.zei_to_bytes());
 
-            csv_writer
-                .serialize(Balance {
-                    mnemonic: record.center_mnemonic,
-                    address,
-                    pub_key,
-                    balance,
-                })
-                .unwrap();
-            csv_writer.flush().unwrap();
-            info!("Write a record.")
-        }
+        csv_writer
+            .serialize(Balance {
+                order_id: record.id,
+                state: record.state,
+                mnemonic: record.center_mnemonic,
+                address,
+                pub_key,
+                balance,
+                to_user: record.to_user,
+            })
+            .unwrap();
+        csv_writer.flush().unwrap();
+        println!("Write record: {}", record.id)
     }
 
-    info!("Complete.")
+    println!("Complete.")
 }
