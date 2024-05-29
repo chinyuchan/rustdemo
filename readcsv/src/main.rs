@@ -40,10 +40,10 @@ struct Record {
 struct Balance {
     pub order_id: u64,
     pub state: u8,
-    pub mnemonic: String,
-    pub address: String,
-    pub pub_key: String,
-    pub balance: u64,
+    pub center_mnemonic: String,
+    pub center_address: String,
+    pub center_pub_key: String,
+    pub fra_balance: u64,
     pub to_user: Option<String>,
 }
 
@@ -92,7 +92,13 @@ fn main() {
     // 写入表头
     csv_writer
         .write_record(&[
-            "order_id", "state", "mnemonic", "address", "pub_key", "balance", "to_user",
+            "order_id",
+            "state",
+            "center_mnemonic",
+            "center_address",
+            "center_pub_key",
+            "fra_balance",
+            "to_user",
         ])
         .unwrap();
 
@@ -110,16 +116,16 @@ fn main() {
             .serialize(Balance {
                 order_id: record.id,
                 state: record.state,
-                mnemonic: record.center_mnemonic,
-                address,
-                pub_key,
-                balance,
+                center_mnemonic: record.center_mnemonic,
+                center_address: address,
+                center_pub_key: pub_key,
+                fra_balance: balance,
                 to_user: record.to_user,
             })
             .unwrap();
         csv_writer.flush().unwrap();
-        println!("Write record: {}", record.id)
+        info!("Write record: {}", record.id)
     }
 
-    println!("Complete.")
+    info!("Complete.")
 }
