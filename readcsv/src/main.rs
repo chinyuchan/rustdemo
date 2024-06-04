@@ -4,7 +4,7 @@ use clap::Parser;
 use csv::{ReaderBuilder, WriterBuilder};
 use globutils::wallet;
 use ledger::data_model::{TxoSID, Utxo, ASSET_TYPE_FRA};
-use log::{debug, info};
+use log::debug;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::File;
@@ -40,6 +40,7 @@ struct Record {
 struct Balance {
     pub order_id: u64,
     pub state: u8,
+    pub user: String,
     pub center_mnemonic: String,
     pub center_address: String,
     pub center_pub_key: String,
@@ -78,7 +79,7 @@ fn get_fra_balance(url: &str, mnemonic: &str) -> u64 {
 
 fn main() {
     env_logger::init();
-    info!("Starting up");
+    println!("Starting up");
 
     let args = Args::parse();
 
@@ -94,6 +95,7 @@ fn main() {
         .write_record(&[
             "order_id",
             "state",
+            "user",
             "center_mnemonic",
             "center_address",
             "center_pub_key",
@@ -116,6 +118,7 @@ fn main() {
             .serialize(Balance {
                 order_id: record.id,
                 state: record.state,
+                user: record.user,
                 center_mnemonic: record.center_mnemonic,
                 center_address: address,
                 center_pub_key: pub_key,
@@ -124,8 +127,8 @@ fn main() {
             })
             .unwrap();
         csv_writer.flush().unwrap();
-        info!("Write record: {}", record.id)
+        println!("Write record: {}", record.id)
     }
 
-    info!("Complete.")
+    println!("Complete.")
 }
