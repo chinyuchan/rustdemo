@@ -2,5 +2,5 @@ target
 Cargo.lock
 .idea
 .vscode
-
+*.txt
 *.csv

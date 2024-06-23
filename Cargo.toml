@@ -1,4 +1,4 @@
 [workspace]
-members = ["native-time", "readcsv"]
+members = [ "multi-threading", "multi-threading-mpsc", "multi-threading-sharedmem","native-time", "readcsv"]
 
 resolver = "2"
