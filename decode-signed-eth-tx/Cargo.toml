@@ -1,0 +1,8 @@
+[package]
+name = "decode-signed-eth-tx"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ethers = { version = "2.0.14", features = ["legacy"] }
+tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
