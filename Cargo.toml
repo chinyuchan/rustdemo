@@ -1,4 +1,4 @@
 [workspace]
-members = [ "decode-signed-eth-tx", "multi-threading", "multi-threading-mpsc", "multi-threading-sharedmem","native-time", "readcsv"]
+members = [ "decode-signed-eth-tx", "multi-threading", "multi-threading-mpsc", "multi-threading-sharedmem","native-time", "readcsv", "structs", "time-elapse"]
 
 resolver = "2"
