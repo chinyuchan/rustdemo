@@ -1,3 +1,4 @@
+#![allow(dead_code, unused)]
 use std::ffi::OsStr;
 use std::fs;
 use std::fs::File;

@@ -1,3 +1,4 @@
+#![allow(dead_code, unused)]
 use chrono::{Datelike, FixedOffset, Local, TimeZone};
 
 fn main() {

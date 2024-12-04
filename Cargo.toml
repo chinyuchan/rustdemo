@@ -1,4 +1,15 @@
 [workspace]
-members = [ "decode-signed-eth-tx", "multi-threading", "multi-threading-mpsc", "multi-threading-sharedmem","native-time", "readcsv", "structs", "time-elapse"]
+members = [
+    "call-contract",
+    "decode-signed-eth-tx",
+    "multi-threading",
+    "multi-threading-mpsc",
+    "multi-threading-sharedmem",
+    "native-time",
+    "readcsv",
+    "sqlx-batch-update",
+    "structs",
+    "time-elapse"
+]
 
 resolver = "2"

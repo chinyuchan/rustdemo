@@ -1,3 +1,4 @@
+#![allow(dead_code, unused)]
 use anyhow::{anyhow, Result};
 use base64::{engine, Engine};
 use clap::Parser;

@@ -1,0 +1,10 @@
+[package]
+name = "sqlx-batch-update"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenv = "0.15.0"
+sqlx = { version = "0.8.2", features = ["runtime-tokio-rustls", "postgres", "chrono"] }
+log = "0.4.22"
+tokio = { version = "1.0.0", features = ["full"] }

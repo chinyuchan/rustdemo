@@ -1,4 +1,4 @@
-
+#![allow(dead_code, unused)]
 // named struct
 #[derive(Debug)]
 struct Person {
@@ -33,6 +33,6 @@ fn main() {
     println!("{:?}", alice2);
     // println!("{:?}", alice); // moved
 
-    let p = Point(1,2);
+    let p = Point(1, 2);
     println!("{:?}", p);
 }
