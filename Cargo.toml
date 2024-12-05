@@ -4,7 +4,7 @@ members = [
     "decode-signed-eth-tx",
     "multi-threading",
     "multi-threading-mpsc",
-    "multi-threading-sharedmem",
+    "multi-threading-sharedmem", "multizip",
     "native-time",
     "readcsv",
     "sqlx-batch-update",
